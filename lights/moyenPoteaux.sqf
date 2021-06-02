@@ -17,7 +17,8 @@
  */
 
 _genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F"];		//liste des générateur
-_moyenPoteauType = ["Land_HighVoltageColumn_F","Land_PowerCable_submarine_F"];	//liste des moyen Poteaux
+_moyenPoteauType = ["Land_HighVoltageColumn_F","Land_PowerCable_submarine_F","Land_PowerLine_01_pole_end_v1_F","Land_PowerLine_01_pole_end_v2_F","Land_PowerLine_01_pole_junction_F","Land_PowerLine_01_pole_lamp_F","Land_PowerLine_01_pole_lamp_off_F","Land_PowerLine_01_pole_small_F","Land_PowerLine_01_pole_tall_F","Land_PowerLine_01_pole_transformer_F"];
+//liste des moyen Poteaux
 
 private _posPoteau = 0;
 private _marker = [0];
