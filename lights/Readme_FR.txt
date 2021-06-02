@@ -8,7 +8,7 @@ I. Utilisation
 II. Installation
 III. Contact
 
-I. utilisation :
+I. Utilisation :
 Au lancement de la mission, pour vérifier l'initialisation du script le message suivant apparaît : "Script de lumière par [DIS]Wolv initialisé".
 Si ce n'est pas votre cas, redémarrez votre mission, recommencez l'installation, puis demandez moi de l'aide si les problemes persistent.
 Si le script s'est correctement exécuté, lorsque vous vous approchez d'un transformateur électrique, vous aurez les options suivantes dans le menue molette :
