@@ -17,7 +17,8 @@
  */
 
 _genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F"];	//liste des générateur
-_petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","powerpolewooden_l_off_f.p3d","powerpolewooden_l_f.p3d","lampshabby_off_f.p3d","lampshabby_f.p3d"];//liste des petit Poteaux (le ".p3d" est essentiel car il s'agit de model 3D des objet, voir note en bas de page de generators.sqf)
+_petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","powerline_01_pole_small_f.p3d","powerline_01_pole_tall_f.p3d","powerline_01_pole_junction_f.p3d","powerline_01_pole_transformer_f.p3d","powerpolewooden_l_off_f.p3d","powerpolewooden_l_f.p3d","lampshabby_off_f.p3d","lampshabby_f.p3d"];
+//liste des petit Poteaux (le ".p3d" est essentiel car il s'agit de model 3D des objet, voir note en bas de page de generators.sqf)
 
 private _posPoteau = 0;
 private _marker = [0];
@@ -45,7 +46,7 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 	_petitPoteauPool set [(count _petitPoteauPool),_posPoteau];	// ajoute a la liste
 	if (_state == 3) then {		// si state = 3 alors on veux affiché des marker sur la carte et ne pas changé l'état des poteaux
 		//crée les 2 marker 
-		/*_marker set [_i, createMarker [(format ["Petit Poteaux Z x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
+		_marker set [_i, createMarker [(format ["Petit Poteaux Z x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
 		(_marker select _i) setMarkerShape "ELLIPSE";
 		(_marker select _i) setMarkerSize [_rPetitL,_rPetitL];
 		(_marker select _i) setMarkerBrush "SolidBorder";

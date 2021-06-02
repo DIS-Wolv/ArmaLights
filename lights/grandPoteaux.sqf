@@ -17,8 +17,6 @@
  */
 
 _genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F"];		//liste des générateur
-_petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","powerpolewooden_l_off_f.p3d","powerpolewooden_l_f.p3d","lampshabby_off_f.p3d","lampshabby_f.p3d"];	//liste des petit Poteaux (le ".p3d" est essentiel car il s'agit de model 3D des objet, voir note en bas de page de generators.sqf)
-_moyenPoteauType = ["Land_HighVoltageColumn_F","Land_PowerCable_submarine_F"];	//liste des moyen Poteaux
 _grandPoteauType = ["Land_HighVoltageTower_large_F","Land_HighVoltageTower_largeCorner_F"];	//liste des grand Poteaux
 
 private _posPoteau = 0;
