@@ -45,6 +45,6 @@ Afin d'installer correctement le script, veuillez suivre le protocole suivant :
 	
 III. Contact :
 Si vous souhaitez une aide quelconque pour la mise en place ou le dépannage du script, je vous invite à me mettre un message sur discord : Wolv#2393
-Si vous souhaitez rejoindre un team de simulation militaire française, je vous invite à rejoindre la DIS : https://discord.gg/asmqFnA
+Si vous souhaitez rejoindre un team de simulation militaire française, je vous invite à rejoindre la DIS : https://discord.gg/7wHQqe7cXX
 
 Merci d'avoir téléchargé mon script
