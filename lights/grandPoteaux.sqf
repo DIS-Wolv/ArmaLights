@@ -16,7 +16,7 @@
  *	Apelle : scripts\lights\grandPoteaux.sqf, scripts\lights\lamps.sqf
  */
 
-_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F"];		//liste des générateur
+_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];		//liste des générateur
 _grandPoteauType = ["Land_HighVoltageTower_large_F","Land_HighVoltageTower_largeCorner_F"];	//liste des grand Poteaux
 
 private _posPoteau = 0;
@@ -46,12 +46,12 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 	
 	if (_state == 3) then {// si state = 3 alors on veux affiché des marker sur la carte et ne pas changé l'état des poteaux
 		//place les 2 marker 
-		/*_marker set [_i, createMarker [(format ["Grand Poteaux Z x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
+		_marker set [_i, createMarker [(format ["Grand Poteaux Z x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
 		(_marker select _i) setMarkerShape "ELLIPSE";
 		(_marker select _i) setMarkerSize [_rGrandL,_rGrandL];
 		(_marker select _i) setMarkerBrush "SolidBorder";
 		(_marker select _i) setMarkerAlpha 0.2; 
-		(_marker select _i) setMarkerColor "ColorGreen";*/
+		(_marker select _i) setMarkerColor "ColorOrange";//*/
 		
 		_markerP set [_i, createMarker [(format ["Grand Poteaux P x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
 		(_markerP select _i) setMarkerType "hd_dot";

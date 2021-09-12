@@ -8,7 +8,7 @@
  *	Apelle : 0/
  */
  
-_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F"];		//liste des générateur
+_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];		//liste des générateur
 _petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","powerpolewooden_l_off_f.p3d","powerpolewooden_l_f.p3d","lampshabby_off_f.p3d","lampshabby_f.p3d"];
 //liste des petit Poteaux (le ".p3d" est essentiel car il s'agit de model 3D des objet, voir note en bas de page)
 _moyenPoteauType = ["Land_HighVoltageColumn_F","Land_PowerCable_submarine_F","Land_PowerLine_01_pole_end_v1_F","Land_PowerLine_01_pole_end_v2_F","Land_PowerLine_01_pole_junction_F","Land_PowerLine_01_pole_lamp_F","Land_PowerLine_01_pole_lamp_off_F","Land_PowerLine_01_pole_small_F","Land_PowerLine_01_pole_tall_F","Land_PowerLine_01_pole_transformer_F"];
@@ -44,16 +44,20 @@ private _speedP = 2000; 	// des lampes
 
 private _power = param[0];
 
+private _markerN = "";
+
 //groupe de poteaux deja changé d'etat
 private _petitPoteauPool = [0]; //Petit
 private _moyenPoteauPool = [0];	//moyen
 private _grandPoteauPool = [0];	//grand
 
+
 {
     _posG = position _x;	//recupère la position
-	
-	if (_power == 3) then {	//a 3 affiche les générateur et leur rayon d'action
-		/*_markerG set [_forEachindex, createMarker [(format ["Gen Z %1", _forEachindex]), _posG]]; 
+
+	if (_power == 3) then {	//a 3 affiche les générateur et leur rayon d'action et les poteaux
+
+		_markerG set [_forEachindex, createMarker [(format ["Gen Z %1", _forEachindex]), _posG]]; 
 		(_markerG select _forEachindex) setMarkerShape "ELLIPSE";
 		(_markerG select _forEachindex) setMarkerSize [_rGenP,_rGenP];
 		(_markerG select _forEachindex) setMarkerBrush "SolidBorder";
@@ -91,10 +95,12 @@ private _grandPoteauPool = [0];	//grand
 			_posPoteau = (position _x);	// recupère ca position et appel le script
 			[_posPoteau, _grandPoteauPool, _forEachindex, _rGrandL, _rGrandP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\grandPoteaux.sqf";
 		} forEach _grandPoteau;
+		
+		sleep 0.1;
 	}
 	else {
 		if (_power == 2) then {	//a 2 affiche les générateur et leur rayon d'action
-			_markerG set [_forEachindex, createMarker [(format ["Gen z x %1, y %2, z %3", (_posG select 0), (_posG select 1), (_posG select 2)]), _posG]]; 
+			_markerG set [_forEachindex, createMarker [(format ["Gen Z x %1, y %2, z %3", (_posG select 0), (_posG select 1), (_posG select 2)]), _posG]]; 
 			(_markerG select _forEachindex) setMarkerShape "ELLIPSE";
 			(_markerG select _forEachindex) setMarkerSize [_rGenL,_rGenL];
 			(_markerG select _forEachindex) setMarkerBrush "SolidBorder";
@@ -104,46 +110,36 @@ private _grandPoteauPool = [0];	//grand
 			_markerGP set [_forEachindex, createMarker [(format ["Gen P x %1, y %2, z %3", (_posG select 0), (_posG select 1), (_posG select 2)]), _posG]]; 
 			(_markerGP select _forEachindex) setMarkerType "loc_Power";
 			(_markerGP select _forEachindex) setMarkerColor "ColorYellow";
-		
+			
+			sleep 0.25;
 		}
 		else {
 			if (_power == 1) then {	//a 1 affiche que les points des générateur
 				_markerGP set [_forEachindex, createMarker [(format ["Gen P x %1, y %2, z %3", (_posG select 0), (_posG select 1), (_posG select 2)]), _posG]]; 
 				(_markerGP select _forEachindex) setMarkerType "loc_Power";
 				(_markerGP select _forEachindex) setMarkerColor "ColorYellow";
+				
+				sleep 0.25;
 			} 
 			else {
 				if (_power == 0) then {
-					private _petitPoteau =  nearestObjects [[15000, 15000, 0], [], 30000, true]; // recupère tout les obj
-					private _moyenPoteau =  nearestObjects [[15000, 15000, 0], _moyenPoteauType, 30000, true]; // recupère tout les moyens poteau
-					private _grandPoteau = nearestObjects [[15000, 15000, 0], _grandPoteauType, 30000, true]; // les grand poteaux
-					
 					
 					{
-						_posG = position _x;
-						deleteMarker (format ["Gen P x %1, y %2, z %3", (_posG select 0), (_posG select 1), (_posG select 2)]);
-						deleteMarker (format ["Gen z x %1, y %2, z %3", (_posG select 0), (_posG select 1), (_posG select 2)]);
-					}forEach _gen;
-					
-					{
-						_posPoteau = position _x;
-						deleteMarker (format ["Petit Poteaux P x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]);
-					}forEach _petitPoteau;
-					
-					{
-						_posPoteau = position _x;
-						deleteMarker (format ["Moyen Poteaux P x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]);
-					}forEach _moyenPoteau;
-					
-					{
-						_posPoteau = position _x;
-						deleteMarker (format ["Grand Poteaux P x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]);
-					}forEach _grandPoteau;
+						_markerN = _x splitString " ";
+						// systemChat(("Gen" in _markerN));
+						if (("Gen" in _markerN) or ("" in _markerN)) then {
+							deleteMarker(_x);
+						};
+						sleep 0.1;
+					}forEach allMapMarkers;
 				};
 			};
 		};
 	};
+	
 } forEach _gen;
+
+systemChat("Map mise a jour !");
 
 //radio addAction ["Afficher les générateur",{[true] execVM "scripts\lights\mapGen.sqf";},[],1.5,true,true,"","true",5];// turn ON
 //radio addAction ["Cacher les générateur",{[false] execVM "scripts\lights\mapGen.sqf";},[],1.5,true,true,"","true",5];// turn off

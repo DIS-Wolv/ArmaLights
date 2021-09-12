@@ -63,7 +63,7 @@ if (_state <= 1) then {
 		if ((count _lamps) != 0) then 
 		{
 			{
-				[_x, _switch] call BIS_fnc_switchLamp;
+				[_x, _switch] remoteExecCall["BIS_fnc_switchLamp"];
 			} forEach _lamps; 
 		}
 	};

@@ -8,7 +8,7 @@
  */
 
 
-_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F"];	//liste des générateur
+_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];	//liste des générateur
 
 //marker Générateur
 private _posMarkerG = 0;
@@ -30,6 +30,7 @@ private _gen = nearestObjects [[15000, 15000, 0], _genType, 30000]; //recupère 
 		params ["_target","_caller","_actionId","_posMarkerG"]; [_target, _caller, _actionId, _posMarkerG, 0] execVM "scripts\lights\generators.sqf";
 	},_posMarkerG,1.5,true,true,"","true",5]; // turn OFF
 	
-}forEach _gen; //pour chque générateur
+}forEach _gen; //pour chaque générateur
+
 sleep 5;
 systemchat "Script de lumière par [DIS]Wolv initialisé";

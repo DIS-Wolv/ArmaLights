@@ -13,7 +13,7 @@
  */
 
 params ["_target","_caller","_actionId","_posPoteauG","_state"]; 	//définition des parrametre
-_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F"];		//liste des générateur
+_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];		//liste des générateur
 _petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","powerpolewooden_l_off_f.p3d","powerpolewooden_l_f.p3d","lampshabby_off_f.p3d","lampshabby_f.p3d"];
 //liste des petit Poteaux (le ".p3d" est essentiel car il s'agit de model 3D des objet, voir note en bas de page)
 _moyenPoteauType = ["Land_HighVoltageColumn_F","Land_PowerCable_submarine_F","Land_PowerLine_01_pole_end_v1_F","Land_PowerLine_01_pole_end_v2_F","Land_PowerLine_01_pole_junction_F","Land_PowerLine_01_pole_lamp_F","Land_PowerLine_01_pole_lamp_off_F","Land_PowerLine_01_pole_small_F","Land_PowerLine_01_pole_tall_F","Land_PowerLine_01_pole_transformer_F"];
@@ -48,11 +48,12 @@ private _petitPoteauPool = [0]; //Petit
 private _moyenPoteauPool = [0];	//moyen
 private _grandPoteauPool = [0];	//grand
 
-[_posPoteauG, _state, _rGenL, _speedL] execVM "scripts\lights\lamps.sqf"; //change le statut des lampe a proximité du générateur 
-
 private _petitPoteau =  nearestObjects [_posPoteauG, [], _rGenP, true]; // recupère tout les obj
 private _moyenPoteau =  nearestObjects [_posPoteauG, _moyenPoteauType, _rGenP, true]; // recupère tout les moyens poteau
 private _grandPoteau = nearestObjects [_posPoteauG, _grandPoteauType, _rGenP, true]; // les grand poteaux
+private _gen = nearestObjects [_posPoteauG, _genType, _rGenP, true]; // les grand poteaux
+
+playSound3D [getMissionPath "scripts\lights\Toggle.wav", _this select 0, false, position _this select 0, 2];
 
 {		//pour chaque petit poteau
 	_objType = (getModelInfo _x) select 0; //récupère l'élément 0 des info de l'objet voir note en bas de page
@@ -74,6 +75,10 @@ private _grandPoteau = nearestObjects [_posPoteauG, _grandPoteauType, _rGenP, tr
 	_posPoteau = (position _x);	// recupère ca position et appel le script
 	[_posPoteau, _grandPoteauPool, _forEachindex, _rGrandL, _rGrandP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\grandPoteaux.sqf";
 } forEach _grandPoteau;
+
+{
+	[position(_x), _state, _rGenL, _speedL] execVM "scripts\lights\lamps.sqf"; //change le statut des lampe a proximité du générateur 
+}forEach _gen;
 
 
 /* NOTE : 
