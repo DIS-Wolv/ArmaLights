@@ -28,6 +28,7 @@ private _grandPoteau = [];
 private _gen = [];
 
 private _map = (findDisplay 12 displayCtrl 51);  // récupères le control de ta map.
+private _count = 0;
 
 //récupération des parametre 
 _posPoteau = param[0];
@@ -72,9 +73,12 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 	{
 		_posPoteauNV = (position _x);		//définie la nouvelle position et appele le script suivant
 		if (_state == 4) then {
-			_map ctrlAddEventHandler ["Draw",
-				format["(_this select 0) drawLine [%1,%2,[0.85,0.4,0,1]];", str(_posPoteau), str(_posPoteauNV)]
-			];
+			if (_count <= 3) then {
+				_map ctrlAddEventHandler ["Draw",
+					format["(_this select 0) drawLine [%1,%2,[0.85,0.4,0,1]];", str(_posPoteau), str(_posPoteauNV)]
+				];
+				_count = _count + 1;
+			}
 		};
 		
 		private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];		//vérifie qu'il n'y a pas de générateur a proximité
