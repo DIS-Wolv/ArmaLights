@@ -8,7 +8,7 @@
 		- _rGrandL			:	raduis de désactivation des lamps
 		- _rGrandP			:	raduis de désactivation des poteaux
 		- _rGenP			:	raduis de désactivation des poteaux sur les générateur
-		- _state			:	état voulue (0 = eteint, 1 = allumé, 3 = affiché sur carte)
+		- _state			:	état voulue (0 = eteint, 1 = allumé, 3 = affiché sur carte, 4 = ligne sur carte)
 		- _speedL			:	delay entre l'extinction (m/s) des lamps
 		- _speedP 			:	delay entre l'extinction (m/s) des poteaux
  
@@ -26,6 +26,8 @@ private _markerP = [0];
 //liste des grand poteaux et des générateur a proximité
 private _grandPoteau = [];
 private _gen = [];
+
+private _map = (findDisplay 12 displayCtrl 51);  // récupères le control de ta map.
 
 //récupération des parametre 
 _posPoteau = param[0];
@@ -46,7 +48,7 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 	
 	if (_state == 3) then {// si state = 3 alors on veux affiché des marker sur la carte et ne pas changé l'état des poteaux
 		//place les 2 marker 
-		_marker set [_i, createMarker [(format ["Grand Poteaux Z x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
+		/*_marker set [_i, createMarker [(format ["Grand Poteaux Z x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
 		(_marker select _i) setMarkerShape "ELLIPSE";
 		(_marker select _i) setMarkerSize [_rGrandL,_rGrandL];
 		(_marker select _i) setMarkerBrush "SolidBorder";
@@ -58,19 +60,28 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 		(_markerP select _i) setMarkerColor "ColorOrange"; 
 	}
 	else { //sinon on change l'état des poteaux
-		[_posPoteau, _state, _rGrandL, _speedL] execVM "scripts\lights\lamps.sqf";	//change le statut des lampe a proximité
+		if (_state == 4) then {}
+		else {
+			[_posPoteau, _state, _rGrandL, _speedL] execVM "scripts\lights\lamps.sqf";	//change le statut des lampe a proximité
+		};
 	};
 	
-	private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];		//vérifie qu'il n'y a pas de générateur a proximité
-	if ((count _gen) == 0) then {		//si pas de générateur a proximité
-		//uiSleep (_speedP);	//fait une pause
-		//test les objet a proximité
-		private _grandPoteau =  nearestObjects [_posPoteau, _grandPoteauType, _rGrandP, true]; // recupère tout les grands poteaux a proximité
-		{
-			_posPoteau = (position _x);		//définie la nouvelle position et appele le script suivant
-			[_posPoteau, _grandPoteauPool, _forEachindex, _rGrandL, _rGrandP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\grandPoteaux.sqf";
-			
-		}forEach _grandPoteau;	//pour chaque grand Poteaux
-		//recurance : voir note 2 en bas de la page "generators.sqf"
-	};
+	
+	
+	private _grandPoteau =  nearestObjects [_posPoteau, _grandPoteauType, _rGrandP, true]; // recupère tout les grands poteaux a proximité
+	{
+		_posPoteauNV = (position _x);		//définie la nouvelle position et appele le script suivant
+		if (_state == 4) then {
+			_map ctrlAddEventHandler ["Draw",
+				format["(_this select 0) drawLine [%1,%2,[0.85,0.4,0,1]];", str(_posPoteau), str(_posPoteauNV)]
+			];
+		};
+		
+		private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];		//vérifie qu'il n'y a pas de générateur a proximité
+		if ((count _gen) == 0) then {		//si pas de générateur a proximité
+			[_posPoteauNV, _grandPoteauPool, _forEachindex, _rGrandL, _rGrandP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\grandPoteaux.sqf";
+		};
+	}forEach _grandPoteau;	//pour chaque grand Poteaux
+	//recurance : voir note 2 en bas de la page "generators.sqf"
+	
 };

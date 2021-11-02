@@ -28,6 +28,8 @@ private _markerP = [0];
 private _moyenPoteau = [];
 private _gen = [];
 
+private _map = (findDisplay 12 displayCtrl 51);  // récupères le control de ta map.
+
 //récupération des parametre 
 _posPoteau = param[0];
 _moyenPoteauPool = param[1];
@@ -47,7 +49,7 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 	
 	if (_state == 3) then {		// si state = 3 alors on veux affiché des marker sur la carte et ne pas changé l'état des poteaux
 		//place les 2 marker 
-		_marker set [_i, createMarker [(format ["Moyen Poteaux Z x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
+		/*_marker set [_i, createMarker [(format ["Moyen Poteaux Z x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
 		(_marker select _i) setMarkerShape "ELLIPSE";
 		(_marker select _i) setMarkerSize [_rMoyenL,_rMoyenL];
 		(_marker select _i) setMarkerBrush "SolidBorder";
@@ -59,17 +61,28 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 		(_markerP select _i) setMarkerColor "ColorBlue";
 	}
 	else { //sinon on change l'état des poteaux
-		[_posPoteau, _state, _rMoyenL, _speedL] execVM "scripts\lights\lamps.sqf";//change le statut des lampe a proximité
+		if (_state == 4) then {}
+		else {
+			[_posPoteau, _state, _rMoyenL, _speedL] execVM "scripts\lights\lamps.sqf";//change le statut des lampe a proximité
+		};
 	};
 	
-	private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];
-	if ((count _gen) == 0) then {		//si pas de générateur a proximité
-		//uiSleep (_speedP);
-		//test les objet a proximité
-		private _moyenPoteau =  nearestObjects [_posPoteau, _moyenPoteauType, _rMoyenP, true]; // recupère tout les moyens poteau
-		{
-			_posPoteau = (position _x);
-			[_posPoteau, _moyenPoteauPool, _forEachindex, _rMoyenL, _rMoyenP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\moyenPoteaux.sqf";
-		}forEach _moyenPoteau;	
-	};
+	
+	//uiSleep (_speedP);
+	//test les objet a proximité
+	private _moyenPoteau =  nearestObjects [_posPoteau, _moyenPoteauType, _rMoyenP, true]; // recupère tout les moyens poteau
+	{
+		_posPoteauNV = (position _x);
+		if (_state == 4) then {
+			_map ctrlAddEventHandler ["Draw",
+				format["(_this select 0) drawLine [%1,%2,[0,0,1,1]];", str(_posPoteau), str(_posPoteauNV)]
+			];
+		};
+		
+		private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];
+		if ((count _gen) == 0) then {		//si pas de générateur a proximité
+			[_posPoteauNV, _moyenPoteauPool, _forEachindex, _rMoyenL, _rMoyenP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\moyenPoteaux.sqf";
+		};
+	}forEach _moyenPoteau;	
+	
 };

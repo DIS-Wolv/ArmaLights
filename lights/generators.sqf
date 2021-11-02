@@ -53,7 +53,7 @@ private _moyenPoteau =  nearestObjects [_posPoteauG, _moyenPoteauType, _rGenP, t
 private _grandPoteau = nearestObjects [_posPoteauG, _grandPoteauType, _rGenP, true]; // les grand poteaux
 private _gen = nearestObjects [_posPoteauG, _genType, _rGenP, true]; // les grand poteaux
 
-playSound3D [getMissionPath "scripts\lights\Toggle.wav", _this select 0, false, position _this select 0, 2];
+playSound3D [getMissionPath "scripts\lights\Toggle.wav", _posPoteauG , false, _posPoteauG, 2];
 
 {		//pour chaque petit poteau
 	_objType = (getModelInfo _x) select 0; //récupère l'élément 0 des info de l'objet voir note en bas de page

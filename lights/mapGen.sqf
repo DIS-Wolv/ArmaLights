@@ -36,6 +36,8 @@ private _markerGP = [0];
 private _posG = [0,0,0];
 private _gen = nearestObjects [[15000, 15000, 0], _genType, 30000]; //recupère les générateur de la carte
 
+private _map = (findDisplay 12 displayCtrl 51);  // récupères le control de ta map.
+
 private _state = 3; // ici on ne veux que l'affichage
 
 //delay entre l'extinction (m/s)
@@ -57,7 +59,7 @@ private _grandPoteauPool = [0];	//grand
 
 	if (_power == 3) then {	//a 3 affiche les générateur et leur rayon d'action et les poteaux
 
-		_markerG set [_forEachindex, createMarker [(format ["Gen Z %1", _forEachindex]), _posG]]; 
+		/*_markerG set [_forEachindex, createMarker [(format ["Gen Z %1", _forEachindex]), _posG]]; 
 		(_markerG select _forEachindex) setMarkerShape "ELLIPSE";
 		(_markerG select _forEachindex) setMarkerSize [_rGenP,_rGenP];
 		(_markerG select _forEachindex) setMarkerBrush "SolidBorder";
@@ -122,16 +124,55 @@ private _grandPoteauPool = [0];	//grand
 				sleep 0.25;
 			} 
 			else {
-				if (_power == 0) then {
+				if (_power == 4) then {
+					_markerGP set [_forEachindex, createMarker [(format ["Gen P x %1, y %2, z %3", (_posG select 0), (_posG select 1), (_posG select 2)]), _posG]]; 
+					(_markerGP select _forEachindex) setMarkerType "loc_Power";
+					(_markerGP select _forEachindex) setMarkerColor "ColorYellow";
+
+
+					private _petitPoteau = nearestObjects [_posG, [], _rGenP, true]; 	// recupère tout les obj
+					private _moyenPoteau = nearestObjects [_posG, _moyenPoteauType, _rGenP, true];	// recupère tout les moyens poteau
+					private _grandPoteau = nearestObjects [_posG, _grandPoteauType, _rGenP, true];	// recupère tout les grand poteaux
+					{		//pour chaque petit poteau
+						_objType = (getModelInfo _x) select 0; //récupère l'élément 0 des info de l'objet voir note en bas de page de generators.sqf
+						_isPetitPoteaux = _petitPoteauType find _objType;		//verifie qu'il s'ajit d'un petit poteau
+						
+						//systemChat str _objType;			
+
+						if(_isPetitPoteaux != -1) then {  	//si c'est un petit poteaux
+							_posPoteau = (position _x); 	//recupère ca position et appel le script
+							[_posPoteau, _petitPoteauPool, _forEachindex, _rPetitL, _rPetitP, _rGenP, 4, _speedL, _speedP] execVM "scripts\lights\petitPoteaux.sqf";
+						}; 
+						//systemChat str _forEachindex;
+					}forEach _petitPoteau; 
+
+					{		//pour chaque moyen poteau
+						_posPoteau = (position _x); 	// recupère ca position et appel le script
+						[_posPoteau, _moyenPoteauPool, _forEachindex, _rMoyenL, _rMoyenP, _rGenP, 4, _speedL, _speedP] execVM "scripts\lights\moyenPoteaux.sqf";
+					} forEach _moyenPoteau; //*/
+
+					{		//pour chaque grand poteau
+						_posPoteau = (position _x);	// recupère ca position et appel le script
+						[_posPoteau, _grandPoteauPool, _forEachindex, _rGrandL, _rGrandP, _rGenP, 4, _speedL, _speedP] execVM "scripts\lights\grandPoteaux.sqf";
+					} forEach _grandPoteau;
 					
-					{
-						_markerN = _x splitString " ";
-						// systemChat(("Gen" in _markerN));
-						if (("Gen" in _markerN) or ("" in _markerN)) then {
-							deleteMarker(_x);
-						};
-						sleep 0.1;
-					}forEach allMapMarkers;
+					sleep 0.25;
+				}
+				else {
+					if (_power == 0) then {
+						{
+							_markerN = _x splitString " ";
+							// systemChat(("Gen" in _markerN));
+							if (("Gen" in _markerN) or ("" in _markerN)) then {
+								deleteMarker(_x);
+							};
+							if (("Poteaux" in _markerN) or ("" in _markerN)) then {
+								deleteMarker(_x);
+							};
+							sleep 0.1;
+						}forEach allMapMarkers;
+						_map ctrlRemoveAllEventHandlers "Draw";
+					};
 				};
 			};
 		};

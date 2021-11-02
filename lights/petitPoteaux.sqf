@@ -27,6 +27,9 @@ private _markerP = [0];
 //liste des grand poteaux et des générateur a proximité
 private _gen = [];
 
+private _map = (findDisplay 12 displayCtrl 51);  // récupères le control de ta map.
+private _count = 0;
+
 //récupération des parametre 
 _posPoteau = param[0];
 _petitPoteauPool = param[1];
@@ -46,7 +49,7 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 	_petitPoteauPool set [(count _petitPoteauPool),_posPoteau];	// ajoute a la liste
 	if (_state == 3) then {		// si state = 3 alors on veux affiché des marker sur la carte et ne pas changé l'état des poteaux
 		//crée les 2 marker 
-		_marker set [_i, createMarker [(format ["Petit Poteaux Z x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
+		/*_marker set [_i, createMarker [(format ["Petit Poteaux Z x %1, y %2, z %3", (_posPoteau select 0), (_posPoteau select 1), (_posPoteau select 2)]), _posPoteau]]; 
 		(_marker select _i) setMarkerShape "ELLIPSE";
 		(_marker select _i) setMarkerSize [_rPetitL,_rPetitL];
 		(_marker select _i) setMarkerBrush "SolidBorder";
@@ -58,26 +61,39 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 		(_markerP select _i) setMarkerColor "ColorGreen";
 
 	} else {
-		[_posPoteau, _state, _rPetitL, _speedL] execVM "scripts\lights\lamps.sqf";//change le statut des lampe a proximité
+		if (_state == 4) then {}
+		else {
+			[_posPoteau, _state, _rPetitL, _speedL] execVM "scripts\lights\lamps.sqf";//change le statut des lampe a proximité
+		};
 	};
 	
 	
-	private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];
-	if ((count _gen) == 0) then {		//si pas de générateur a proximité
-		//uiSleep (_speedP);
+	
+	//uiSleep (_speedP);
+	
+	private _petitPoteau = nearestObjects [_posPoteau, [], _rPetitP, true]; // recupère tout les obj
+	{
+		_objType = (getModelInfo _x) select 0;
+		_isPetitPoteaux = _petitPoteauType find _objType;
 		
-		private _petitPoteau = nearestObjects [_posPoteau, [], _rPetitP, true]; // recupère tout les obj
-		{
-			_objType = (getModelInfo _x) select 0;
-			_isPetitPoteaux = _petitPoteauType find _objType;
+		if(_isPetitPoteaux != -1) then {
 			
-			if(_isPetitPoteaux != -1) then {
-				
-				_posPoteau = (position _x);
-				
-				[_posPoteau, _petitPoteauPool, _forEachindex, _rPetitL, _rPetitP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\petitPoteaux.sqf";
+			_posPoteauNV = (position _x);
+			if (_state == 4) then {
+				if (_count <= 3) then {
+					_map ctrlAddEventHandler ["Draw",
+						format["(_this select 0) drawLine [%1,%2,[0,0.8,0,1]];", str(_posPoteau), str(_posPoteauNV)]
+					];
+					_count = _count + 1;
+				}
 			};
-			//systemChat str _forEachindex;
-		} forEach _petitPoteau;
-	};
+			
+			private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];
+			if ((count _gen) == 0) then {		//si pas de générateur a proximité
+				[_posPoteauNV, _petitPoteauPool, _forEachindex, _rPetitL, _rPetitP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\petitPoteaux.sqf";
+			};
+		};
+		//systemChat str _forEachindex;
+	} forEach _petitPoteau;
+	
 };

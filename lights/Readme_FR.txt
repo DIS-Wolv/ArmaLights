@@ -39,6 +39,8 @@ Afin d'installer correctement le script, veuillez suivre le protocole suivant :
 				"<MaVariable> addAction ["Afficher les générateur",{[2] execVM "scripts\lights\mapGen.sqf";},[],1.5,true,true,"","true",5];"
 			- Pour les transformateurs ainsi que tous les poteaux connectés sur la carte :
 				"<MaVariable> addAction ["Afficher les générateur",{[3] execVM "scripts\lights\mapGen.sqf";},[],1.5,true,true,"","true",5];"
+			- Pour les transformateurs ainsi que les ligne reliant les poteaux éléctrique :
+				"<MaVariable> addAction ["Afficher les générateur",{[4] execVM "scripts\lights\mapGen.sqf";},[],1.5,true,true,"","true",5];"
 			Remplacez <MaVariable> par le nom de l'objet sur le quelles vos voulé les actions pour affiché ou cache les informations.
 	6. Lancez la mission et vérifié si le message d'initialisation s'affiche.
 	7. Profitez

@@ -38,6 +38,8 @@ In order to properly install the script, please follow the following protocol:
 				"<MyVar> addAction ["Show generators", {[2] execVM"scripts\lights\mapGen.sqf";}, [], 1.5, true, true,"","true", 5];"
 			- For transformers as well as all the poles connected on the board:
 				"<MyVar> addAction ["Show generators", {[3] execVM"scripts\lights\mapGen.sqf";}, [], 1.5, true, true,"","true", 5];"
+			- For transformers as well as all the poles connected on the board whith a line:
+				"<MyVar> addAction ["Show generators", {[4] execVM"scripts\lights\mapGen.sqf";}, [], 1.5, true, true,"","true", 5];"
 			Replace <MyVar> with the name of the object on which you want actions to display or hide information.
 	6. Start the mission and check if the initialization message is displayed.
 	7. Enjoy
