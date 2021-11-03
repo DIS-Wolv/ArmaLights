@@ -67,10 +67,6 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 		};
 	};
 	
-	
-	
-	//uiSleep (_speedP);
-	
 	private _petitPoteau = nearestObjects [_posPoteau, [], _rPetitP, true]; // recupère tout les obj
 	{
 		_objType = (getModelInfo _x) select 0;
@@ -93,7 +89,6 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 				[_posPoteauNV, _petitPoteauPool, _forEachindex, _rPetitL, _rPetitP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\petitPoteaux.sqf";
 			};
 		};
-		//systemChat str _forEachindex;
 	} forEach _petitPoteau;
 	
 };

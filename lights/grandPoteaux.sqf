@@ -17,7 +17,8 @@
  */
 
 _genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];		//liste des générateur
-_grandPoteauType = ["Land_HighVoltageTower_large_F","Land_HighVoltageTower_largeCorner_F"];	//liste des grand Poteaux
+_grandPoteauType = ["highvoltagetower_largecorner_f.p3d","highvoltagetower_large_f.p3d"];
+	//liste des grand Poteaux
 
 private _posPoteau = 0;
 private _marker = [0];
@@ -69,21 +70,26 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 	
 	
 	
-	private _grandPoteau =  nearestObjects [_posPoteau, _grandPoteauType, _rGrandP, true]; // recupère tout les grands poteaux a proximité
+	private _grandPoteau =  nearestObjects [_posPoteau, [], _rGrandP, true]; // recupère tout les grands poteaux a proximité
 	{
-		_posPoteauNV = (position _x);		//définie la nouvelle position et appele le script suivant
-		if (_state == 4) then {
-			if (_count <= 3) then {
-				_map ctrlAddEventHandler ["Draw",
-					format["(_this select 0) drawLine [%1,%2,[0.85,0.4,0,1]];", str(_posPoteau), str(_posPoteauNV)]
-				];
-				_count = _count + 1;
-			}
-		};
+		_objType = (getModelInfo _x) select 0;
+		_isGrandPoteaux = _grandPoteauType find _objType;
 		
-		private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];		//vérifie qu'il n'y a pas de générateur a proximité
-		if ((count _gen) == 0) then {		//si pas de générateur a proximité
-			[_posPoteauNV, _grandPoteauPool, _forEachindex, _rGrandL, _rGrandP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\grandPoteaux.sqf";
+		if(_isGrandPoteaux != -1) then {
+			_posPoteauNV = (position _x);		//définie la nouvelle position et appele le script suivant
+			if (_state == 4) then {
+				if (_count <= 3) then {
+					_map ctrlAddEventHandler ["Draw",
+						format["(_this select 0) drawLine [%1,%2,[0.85,0.4,0,1]];", str(_posPoteau), str(_posPoteauNV)]
+					];
+					_count = _count + 1;
+				}
+			};
+			
+			private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];		//vérifie qu'il n'y a pas de générateur a proximité
+			if ((count _gen) == 0) then {		//si pas de générateur a proximité
+				[_posPoteauNV, _grandPoteauPool, _forEachindex, _rGrandL, _rGrandP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\grandPoteaux.sqf";
+			};
 		};
 	}forEach _grandPoteau;	//pour chaque grand Poteaux
 	//recurance : voir note 2 en bas de la page "generators.sqf"

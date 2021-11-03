@@ -17,8 +17,11 @@
  */
 
 _genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];		//liste des générateur
-_moyenPoteauType = ["Land_HighVoltageColumn_F","Land_PowerCable_submarine_F","Land_PowerLine_01_pole_end_v1_F","Land_PowerLine_01_pole_end_v2_F","Land_PowerLine_01_pole_junction_F","Land_PowerLine_01_pole_lamp_F","Land_PowerLine_01_pole_lamp_off_F","Land_PowerLine_01_pole_small_F","Land_PowerLine_01_pole_tall_F","Land_PowerLine_01_pole_transformer_F"];
-//liste des moyen Poteaux
+_moyenPoteauType = ["highvoltagecolumn_f.p3d",	//Altis
+	"powerline_01_pole_junction_f.p3d","powerline_01_pole_small_f.p3d","powerline_01_pole_tall_f.p3d", "powerline_01_pole_transformer_f.p3d", //Malden
+	"powerline_01_pole_end_v1_f.p3d","powerline_01_pole_end_v2_f.p3d","powerline_01_pole_lamp_f.p3d", //Tanoa
+	"jbad_powlineb.p3d"]; // compatibilité JBAD
+	//liste des moyen Poteaux
 
 private _posPoteau = 0;
 private _marker = [0];
@@ -68,24 +71,27 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 		};
 	};
 	
-	
-	//uiSleep (_speedP);
 	//test les objet a proximité
-	private _moyenPoteau =  nearestObjects [_posPoteau, _moyenPoteauType, _rMoyenP, true]; // recupère tout les moyens poteau
+	private _moyenPoteau =  nearestObjects [_posPoteau, [], _rMoyenP, true]; // recupère tout les moyens poteau
 	{
-		_posPoteauNV = (position _x);
-		if (_state == 4) then {
-			if (_count <= 3) then {
-				_map ctrlAddEventHandler ["Draw",
-					format["(_this select 0) drawLine [%1,%2,[0,0,1,1]];", str(_posPoteau), str(_posPoteauNV)]
-				];
-				_count = _count + 1;
-			}
-		};
+		_objType = (getModelInfo _x) select 0;
+		_isMoyenPoteaux = _moyenPoteauType find _objType;
+		if (_isMoyenPoteaux != -1) then {
 		
-		private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];
-		if ((count _gen) == 0) then {		//si pas de générateur a proximité
-			[_posPoteauNV, _moyenPoteauPool, _forEachindex, _rMoyenL, _rMoyenP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\moyenPoteaux.sqf";
+			_posPoteauNV = (position _x);
+			if (_state == 4) then {
+				if (_count <= 3) then {
+					_map ctrlAddEventHandler ["Draw",
+						format["(_this select 0) drawLine [%1,%2,[0,0,1,1]];", str(_posPoteau), str(_posPoteauNV)]
+					];
+					_count = _count + 1;
+				}
+			};
+			
+			private _gen = nearestObjects [_posPoteau, _genType, _rGenP / 2, true];
+			if ((count _gen) == 0) then {		//si pas de générateur a proximité
+				[_posPoteauNV, _moyenPoteauPool, _forEachindex, _rMoyenL, _rMoyenP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\moyenPoteaux.sqf";
+			};
 		};
 	}forEach _moyenPoteau;	
 	
