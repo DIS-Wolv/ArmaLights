@@ -32,7 +32,22 @@ _lampsType = [
     "Land_PowerPoleWooden_L_F",
     "Land_PowerLine_01_pole_lamp_F",
     "Land_PowerLine_01_pole_lamp_off_F",
-    "Land_fs_roof_F" 
+    "Land_fs_roof_F",
+	//DLC contact
+		"Land_LampStreet_02_F", 
+		"Land_LampStreet_02_off_F", 
+		"Land_LampStreet_02_triple_F", 
+		"Land_LampStreet_02_triple_off_F", 
+		"Land_LampStreet_02_amplion_F",
+		"Land_LampStreet_02_amplion_off_F",
+		"Land_LampStreet_02_double_F",
+		"Land_LampStreet_02_double_off_F",
+		"Land_LampIndustrial_02_F",
+		"Land_LampIndustrial_02_off_F",
+		"Land_LampIndustrial_01_F",
+		"Land_LampIndustrial_01_off_F",
+		"Land_PowerLine_02_pole_small_lamp_off_F",
+		"Land_PowerLine_02_pole_small_lamp_F"
 ]; //liste des lamps
 
  private _l1 = [];

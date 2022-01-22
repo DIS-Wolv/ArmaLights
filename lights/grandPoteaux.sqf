@@ -16,9 +16,13 @@
  *	Apelle : scripts\lights\grandPoteaux.sqf, scripts\lights\lamps.sqf
  */
 
-_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];		//liste des générateur
-_grandPoteauType = ["highvoltagetower_largecorner_f.p3d","highvoltagetower_large_f.p3d"];
-	//liste des grand Poteaux
+_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F",
+	//compat CUP
+		"Land_Trafostanica_mala","Land_Trafostanica_velka", "Land_Substation_01_F"	
+	];		//liste des générateur
+_grandPoteauType = ["highvoltagetower_largecorner_f.p3d","highvoltagetower_large_f.p3d","highvoltageend_f.p3d",
+	"sloup_vn.p3d"	//compat CUP
+	];	//liste des grand Poteaux
 
 private _posPoteau = 0;
 private _marker = [0];
@@ -45,7 +49,7 @@ _speedP = param[8];
 private _isInPool = _grandPoteauPool find _posPoteau;		//test si le poteau est deja dans la liste 
 
 if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste 
-
+	
 	_grandPoteauPool set [(count _grandPoteauPool),_posPoteau];		// ajoute le poteaux dans la liste
 	
 	if (_state == 3) then {// si state = 3 alors on veux affiché des marker sur la carte et ne pas changé l'état des poteaux
@@ -68,16 +72,16 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 		};
 	};
 	
-	
-	
 	private _grandPoteau =  nearestObjects [_posPoteau, [], _rGrandP, true]; // recupère tout les grands poteaux a proximité
 	{
 		_objType = (getModelInfo _x) select 0;
 		_isGrandPoteaux = _grandPoteauType find _objType;
 		
 		if(_isGrandPoteaux != -1) then {
+		
 			_posPoteauNV = (position _x);		//définie la nouvelle position et appele le script suivant
 			if (_state == 4) then {
+				
 				if (_count <= 3) then {
 					_map ctrlAddEventHandler ["Draw",
 						format["(_this select 0) drawLine [%1,%2,[0.85,0.4,0,1]];", str(_posPoteau), str(_posPoteauNV)]
@@ -93,5 +97,4 @@ if (_isInPool == -1) then {		//si le poteaux n'est pas dans la liste
 		};
 	}forEach _grandPoteau;	//pour chaque grand Poteaux
 	//recurance : voir note 2 en bas de la page "generators.sqf"
-	
 };

@@ -8,7 +8,10 @@
  */
 
 
-_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];	//liste des générateur
+_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F",
+	//compat CUP
+		"Land_Trafostanica_mala","Land_Trafostanica_velka", "Land_Substation_01_F"	
+	];		//liste des générateur
 
 //marker Générateur
 private _posMarkerG = 0;

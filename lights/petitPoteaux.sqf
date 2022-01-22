@@ -16,9 +16,23 @@
  *	Apelle : scripts\lights\petitPoteaux.sqf, scripts\lights\lamps.sqf
  */
 
-_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];	//liste des générateur
-_petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","powerpolewooden_l_off_f.p3d","powerpolewooden_l_f.p3d","lampshabby_off_f.p3d","lampshabby_f.p3d"];
-//liste des petit Poteaux (le ".p3d" est essentiel car il s'agit de model 3D des objet, voir note en bas de page de generators.sqf)
+_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F",
+	//compat CUP
+		"Land_Trafostanica_mala","Land_Trafostanica_velka", "Land_Substation_01_F"	
+	];		//liste des générateur
+	
+_petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","powerpolewooden_l_off_f.p3d","powerpolewooden_l_f.p3d","lampshabby_off_f.p3d","lampshabby_f.p3d",
+		"powerline_02_pole_small_f.p3d","powerline_02_pole_small_a_f.p3d",
+	// compatibilité JBAD (Lythium)
+		"jbad_powlines_conc1.p3d","jbad_powlines_conc2l.p3d","powerpoleconcrete_f.p3d", 
+	//CUP
+		"powlines_conc1.p3d", "powlines_conc3.p3d", "misc_amplion_conc.p3d","powlines_concl.p3d","powlines_conca.p3d",
+		"powlines_wood1.p3d", "powlines_wood2.p3d","powlines_wooda.p3d","powlines_woodl.p3d","misc_amplion_wood.p3d", "sloupyeli.p3d","sloupyele.p3d", 
+	//compat DLC contact
+		"powerline_03_pole_junction_f.p3d", "powerline_03_pole_f.p3d","powerline_02_pole_small_a_f.p3d", "powerline_02_pole_small_hook_f.p3d",
+		"powerline_02_pole_small_hook_junction_f.p3d", "power_pole_wood1.p3d", "powerline_02_pole_junction_a_f.p3d", "powerline_02_pole_small_end_a_f.p3d",
+		"powerline_03_pole_end_f.p3d"
+	];	//liste des petit poteau (le ".p3d" est essentiel car il s'agit de model 3D des objet, voir note en bas de page de generators.sqf)
 
 private _posPoteau = 0;
 private _marker = [0];

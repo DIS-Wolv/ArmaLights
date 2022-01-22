@@ -13,12 +13,33 @@
  */
 
 params ["_target","_caller","_actionId","_posPoteauG","_state"]; 	//définition des parrametre
-_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];		//liste des générateur
-_petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","powerpolewooden_l_off_f.p3d","powerpolewooden_l_f.p3d","lampshabby_off_f.p3d","lampshabby_f.p3d"];
-//liste des petit Poteaux (le ".p3d" est essentiel car il s'agit de model 3D des objet, voir note en bas de page)
-_moyenPoteauType = ["Land_HighVoltageColumn_F","Land_PowerCable_submarine_F","Land_PowerLine_01_pole_end_v1_F","Land_PowerLine_01_pole_end_v2_F","Land_PowerLine_01_pole_junction_F","Land_PowerLine_01_pole_lamp_F","Land_PowerLine_01_pole_lamp_off_F","Land_PowerLine_01_pole_small_F","Land_PowerLine_01_pole_tall_F","Land_PowerLine_01_pole_transformer_F"];
-//liste des moyen Poteaux
-_grandPoteauType = ["Land_HighVoltageTower_large_F","Land_HighVoltageTower_largeCorner_F"];	//liste des grand poteaux
+_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F",
+	//compat CUP
+		"Land_Trafostanica_mala","Land_Trafostanica_velka", "Land_Substation_01_F"	
+	];		//liste des générateur
+	
+_petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","powerpolewooden_l_off_f.p3d","powerpolewooden_l_f.p3d","lampshabby_off_f.p3d","lampshabby_f.p3d",
+		"powerline_02_pole_small_f.p3d","powerline_02_pole_small_a_f.p3d",
+	// compatibilité JBAD (Lythium)
+		"jbad_powlines_conc1.p3d","jbad_powlines_conc2l.p3d","powerpoleconcrete_f.p3d", 
+	//CUP
+		"powlines_conc1.p3d", "powlines_conc3.p3d", "misc_amplion_conc.p3d","powlines_concl.p3d","powlines_conca.p3d",
+		"powlines_wood1.p3d", "powlines_wood2.p3d","powlines_wooda.p3d","powlines_woodl.p3d","misc_amplion_wood.p3d", "sloupyeli.p3d","sloupyele.p3d", 
+	//compat DLC contact
+		"powerline_03_pole_junction_f.p3d", "powerline_03_pole_f.p3d","powerline_02_pole_small_a_f.p3d", "powerline_02_pole_small_hook_f.p3d",
+		"powerline_02_pole_small_hook_junction_f.p3d", "power_pole_wood1.p3d", "powerline_02_pole_junction_a_f.p3d", "powerline_02_pole_small_end_a_f.p3d",
+		"powerline_03_pole_end_f.p3d"
+	];	//liste des petit poteau
+	
+_moyenPoteauType = ["highvoltagecolumn_f.p3d",	//Altis
+	"powerline_01_pole_junction_f.p3d","powerline_01_pole_small_f.p3d","powerline_01_pole_tall_f.p3d", "powerline_01_pole_transformer_f.p3d", //Malden
+	"powerline_01_pole_end_v1_f.p3d","powerline_01_pole_end_v2_f.p3d","powerline_01_pole_lamp_f.p3d", //Tanoa
+	"jbad_powlineb.p3d" // compatibilité JBAD
+	];	//liste des moyen Poteaux
+	
+_grandPoteauType = ["highvoltagetower_largecorner_f.p3d","highvoltagetower_large_f.p3d","highvoltageend_f.p3d",
+	"sloup_vn.p3d"	//compat CUP
+	];	//liste des grand Poteaux
 
 //position poteau
 private _posPoteau = 0;
@@ -48,33 +69,34 @@ private _petitPoteauPool = [0]; //Petit
 private _moyenPoteauPool = [0];	//moyen
 private _grandPoteauPool = [0];	//grand
 
-private _petitPoteau =  nearestObjects [_posPoteauG, [], _rGenP, true]; // recupère tout les obj
-private _moyenPoteau =  nearestObjects [_posPoteauG, _moyenPoteauType, _rGenP, true]; // recupère tout les moyens poteau
-private _grandPoteau = nearestObjects [_posPoteauG, _grandPoteauType, _rGenP, true]; // les grand poteaux
+private _poteau =  nearestObjects [_posPoteauG, [], _rGenP, true]; // recupère tout les obj
 private _gen = nearestObjects [_posPoteauG, _genType, _rGenP, true]; // les grand poteaux
 
 playSound3D [getMissionPath "scripts\lights\Toggle.wav", _posPoteauG , false, _posPoteauG, 2];
 
+
 {		//pour chaque petit poteau
 	_objType = (getModelInfo _x) select 0; //récupère l'élément 0 des info de l'objet voir note en bas de page
-	_isPetitPoteaux = _petitPoteauType find _objType;		//verifie qu'il s'ajit d'un petit poteau
 	
+	_isPetitPoteaux = _petitPoteauType find _objType;		//verifie qu'il s'ajit d'un petit poteau
 	if(_isPetitPoteaux != -1) then {  	//si c'est un petit poteaux
 		_posPoteau = (position _x); 	//recupère ca position et appel le script
 		[_posPoteau, _petitPoteauPool, _forEachindex, _rPetitL, _rPetitP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\petitPoteaux.sqf";
 	}; 
-	//systemChat str _forEachindex;
-} forEach _petitPoteau; 
-
-{		//pour chaque moyen poteau
-	_posPoteau = (position _x); 	// recupère ca position et appel le script
-	[_posPoteau, _moyenPoteauPool, _forEachindex, _rMoyenL, _rMoyenP, _rGenP,_state, _speedL, _speedP] execVM "scripts\lights\moyenPoteaux.sqf";
-} forEach _moyenPoteau;
-
-{		//pour chaque grand poteau
-	_posPoteau = (position _x);	// recupère ca position et appel le script
-	[_posPoteau, _grandPoteauPool, _forEachindex, _rGrandL, _rGrandP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\grandPoteaux.sqf";
-} forEach _grandPoteau;
+	
+	_isMoyenPoteaux = _moyenPoteauType find _objType;
+	if(_isMoyenPoteaux != -1) then {  	//si c'est un petit poteaux
+		_posPoteau = (position _x); 	// recupère ca position et appel le script
+		[_posPoteau, _moyenPoteauPool, _forEachindex, _rMoyenL, _rMoyenP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\moyenPoteaux.sqf";
+	}; 
+	
+	_isGrandPoteaux = _grandPoteauType find _objType;
+	if(_isGrandPoteaux != -1) then {  	//si c'est un petit poteaux
+		_posPoteau = (position _x); 	//recupère ca position et appel le script
+		[_posPoteau, _grandPoteauPool, _forEachindex, _rGrandL, _rGrandP, _rGenP, _state, _speedL, _speedP] execVM "scripts\lights\grandPoteaux.sqf";
+	}; 
+	
+} forEach _poteau; 
 
 {
 	[position(_x), _state, _rGenL, _speedL] execVM "scripts\lights\lamps.sqf"; //change le statut des lampe a proximité du générateur 

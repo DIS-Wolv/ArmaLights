@@ -16,12 +16,16 @@
  *	Apelle : scripts\lights\moyenPoteaux.sqf, scripts\lights\lamps.sqf
  */
 
-_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F"];		//liste des générateur
+_genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F",
+	//compat CUP
+		"Land_Trafostanica_mala","Land_Trafostanica_velka", "Land_Substation_01_F"	
+	];		//liste des générateur
+	
 _moyenPoteauType = ["highvoltagecolumn_f.p3d",	//Altis
 	"powerline_01_pole_junction_f.p3d","powerline_01_pole_small_f.p3d","powerline_01_pole_tall_f.p3d", "powerline_01_pole_transformer_f.p3d", //Malden
 	"powerline_01_pole_end_v1_f.p3d","powerline_01_pole_end_v2_f.p3d","powerline_01_pole_lamp_f.p3d", //Tanoa
-	"jbad_powlineb.p3d"]; // compatibilité JBAD
-	//liste des moyen Poteaux
+	"jbad_powlineb.p3d" // compatibilité JBAD
+	];	//liste des moyen Poteaux
 
 private _posPoteau = 0;
 private _marker = [0];
