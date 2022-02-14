@@ -18,8 +18,11 @@
 
 _genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F",
 	//compat CUP
-		"Land_Trafostanica_mala","Land_Trafostanica_velka", "Land_Substation_01_F"	
+		"Land_Trafostanica_mala","Land_Trafostanica_velka", "Land_Substation_01_F",
+	//compat SOG Prairie Fire
+		"Land_vn_mobileradar_01_generator_f","Land_vn_misc_waterstation", "Land_vn_waterstation_01_f"
 	];		//liste des générateur
+	
 _grandPoteauType = ["highvoltagetower_largecorner_f.p3d","highvoltagetower_large_f.p3d","highvoltageend_f.p3d",
 	"sloup_vn.p3d"	//compat CUP
 	];	//liste des grand Poteaux

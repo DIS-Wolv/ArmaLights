@@ -15,8 +15,10 @@
 params ["_target","_caller","_actionId","_posPoteauG","_state"]; 	//définition des parrametre
 _genType = ["Land_spp_Transformer_F", "Land_dp_transformer_F","Land_TBox_F",
 	//compat CUP
-		"Land_Trafostanica_mala","Land_Trafostanica_velka", "Land_Substation_01_F"	
-	];		//liste des générateur
+		"Land_Trafostanica_mala","Land_Trafostanica_velka", "Land_Substation_01_F",
+	//compat SOG Prairie Fire
+		"Land_vn_mobileradar_01_generator_f","Land_vn_misc_waterstation", "Land_vn_waterstation_01_f"
+	];		//liste des générateurr
 	
 _petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","powerpolewooden_l_off_f.p3d","powerpolewooden_l_f.p3d","lampshabby_off_f.p3d","lampshabby_f.p3d",
 		"powerline_02_pole_small_f.p3d","powerline_02_pole_small_a_f.p3d",
@@ -28,8 +30,11 @@ _petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","power
 	//compat DLC contact
 		"powerline_03_pole_junction_f.p3d", "powerline_03_pole_f.p3d","powerline_02_pole_small_a_f.p3d", "powerline_02_pole_small_hook_f.p3d",
 		"powerline_02_pole_small_hook_junction_f.p3d", "power_pole_wood1.p3d", "powerline_02_pole_junction_a_f.p3d", "powerline_02_pole_small_end_a_f.p3d",
-		"powerline_03_pole_end_f.p3d"
-	];	//liste des petit poteau
+		"powerline_03_pole_end_f.p3d",
+	//compat SOG Prairie Fire
+		"vn_powerpolewooden_small_f.p3d","vn_powerpolewooden_l_f.p3d","vn_powerpolewooden_l_off_f.p3d","vn_lampshabby_f.p3d","vn_powerpolewooden_f.p3d",
+		"vn_powlineb_ep1.p3d"
+	];	//liste des petit poteau (le ".p3d" est essentiel car il s'agit de model 3D des objet, voir note en bas de page de generators.sqf)
 	
 _moyenPoteauType = ["highvoltagecolumn_f.p3d",	//Altis
 	"powerline_01_pole_junction_f.p3d","powerline_01_pole_small_f.p3d","powerline_01_pole_tall_f.p3d", "powerline_01_pole_transformer_f.p3d", //Malden

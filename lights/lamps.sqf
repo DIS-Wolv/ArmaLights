@@ -47,7 +47,13 @@ _lampsType = [
 		"Land_LampIndustrial_01_F",
 		"Land_LampIndustrial_01_off_F",
 		"Land_PowerLine_02_pole_small_lamp_off_F",
-		"Land_PowerLine_02_pole_small_lamp_F"
+		"Land_PowerLine_02_pole_small_lamp_F",
+	//DLC SOG Prairie Fire
+		"Land_vn_lampshabby_off_f",
+		"Land_vn_lampshabby_f",
+		"Land_vn_lampazel",
+		"Land_vn_powerpolewooden_l_off_f",
+		"Land_vn_powerpolewooden_l_f"
 ]; //liste des lamps
 
  private _l1 = [];

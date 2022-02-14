@@ -18,8 +18,11 @@ _petitPoteauType = ["powerpolewooden_f.p3d","powerpolewooden_small_f.p3d","power
 	//compat DLC contact
 		"powerline_03_pole_junction_f.p3d", "powerline_03_pole_f.p3d","powerline_02_pole_small_a_f.p3d", "powerline_02_pole_small_hook_f.p3d",
 		"powerline_02_pole_small_hook_junction_f.p3d", "power_pole_wood1.p3d", "powerline_02_pole_junction_a_f.p3d", "powerline_02_pole_small_end_a_f.p3d",
-		"powerline_03_pole_end_f.p3d"
-	];
+		"powerline_03_pole_end_f.p3d",
+	//compat SOG Prairie Fire
+		"vn_powerpolewooden_small_f.p3d","vn_powerpolewooden_l_f.p3d","vn_powerpolewooden_l_off_f.p3d","vn_lampshabby_f.p3d","vn_powerpolewooden_f.p3d",
+		"vn_powlineb_ep1.p3d"
+	];	//liste des petit poteau (le ".p3d" est essentiel car il s'agit de model 3D des objet, voir note en bas de page de generators.sqf)
 
 _moyenPoteauType = ["highvoltagecolumn_f.p3d",	//Altis
 	"powerline_01_pole_junction_f.p3d","powerline_01_pole_small_f.p3d","powerline_01_pole_tall_f.p3d", "powerline_01_pole_transformer_f.p3d", //Malden
