@@ -25,7 +25,9 @@ private _rGrandL = 250;	//raduis de désactivation des lamps
 private _markerG = [];
 private _markerGP = [];
 private _posG = [0,0,0];
-private _gen = nearestObjects [[15000, 15000, 0], WolvLights_var_genType, 30000]; //recupère les générateur de la carte
+
+private _center = [worldSize/2, worldSize/2, 0]; //centre de la carte
+private _gen = nearestObjects [_center, WolvLights_var_genType, worldSize]; //recupère les générateur de la carte
 
 private _map = (findDisplay 12 displayCtrl 51);  // récupères le control de ta map.
 

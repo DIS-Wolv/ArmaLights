@@ -9,9 +9,11 @@ params ["_power"];
 
 private _markerGP = [];
 
+private _center = [worldSize/2, worldSize/2, 0]; //centre de la carte
+
 switch (_power) do {
 	case 1: {
-		private _Poteau = nearestObjects [[15000, 15000, 0], [], 30000]; // recupère tout les obj
+		private _Poteau = nearestObjects [_center, [], worldSize]; // recupère tout les obj
 		{
 			_objType = (getModelInfo _x) select 0;
 			
