@@ -1,0 +1,4 @@
+class CfgFunctions
+{
+	#include "WOLV_Lights\CfgFunctions.hpp"
+};
