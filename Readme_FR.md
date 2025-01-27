@@ -3,12 +3,12 @@ Attention, lisez entièrement le fichier avant de demander de l'aide
 
 Merci d'avoir téléchargé mon script
 
-Sommaire :
+# Sommaire :
 I. Utilisation
 II. Installation
 III. Contact
 
-I. Utilisation :
+# I. Utilisation :
 Au lancement de la mission, pour vérifier l'initialisation du script le message suivant apparaît : "Script de lumière par [DIS]Wolv initialisé".
 Si ce n'est pas votre cas, redémarrez votre mission, recommencez l'installation, puis demandez moi de l'aide si les problemes persistent.
 Si le script s'est correctement exécuté, lorsque vous vous approchez d'un transformateur électrique, vous aurez les options suivantes dans le menue molette :
@@ -22,7 +22,7 @@ Les différente action sont les suivantes :
 	- soit les transformateurs ainsi que tous les poteaux connectés (déconseillé car cause des chutes de FPS)
 
 
-II. Installation :
+# II. Installation :
 Afin d'installer correctement le script, veuillez suivre le protocole suivant :
 	1. Créez une mission en 3den et la sauvegarder, avec si souhaité un objet avec un nom de variable pour afficher les informations (voir Utilisation)
 	2. Ouvrez le dossier de la mission (dans C:\Utilisateur\<VotreUtilisateur>\Documents\Arma 3 - Other Profiles\<VotreProfil>\mpmissions\<NomDeLaMission>)
@@ -44,7 +44,7 @@ Afin d'installer correctement le script, veuillez suivre le protocole suivant :
 	7. Lancez la mission et vérifié si le message d'initialisation s'affiche.
 	8. Profitez
 	
-III. Contact :
+# III. Contact :
 Si vous souhaitez une aide quelconque pour la mise en place ou le dépannage du script, je vous invite à me mettre un message sur discord : Wolv#2393
 Si vous souhaitez rejoindre un team de simulation militaire française, je vous invite à rejoindre la DIS : https://discord.gg/7wHQqe7cXX
 

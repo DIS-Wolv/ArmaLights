@@ -3,12 +3,12 @@ Be careful, read the entire file before asking for help
 
 Thanks for downloading my script
 
-Summary:
+# Summary:
 I. Use
 II. Installation
 III. Contact
 
-I. use:
+# I. use:
 At the launch of the mission, to check the initialization of the script the following message appears: "Script de lumière par [DIS]Wolv initialisé" ("Light script by [DIS] Wolv initialized" in French)
 If not, restart the installation, restart your mission, then and if it still not working : ask me for help.
 If the script is correctly executed, when you approach an electrical transformer, you will have the following options in the jog wheel:
@@ -21,7 +21,7 @@ If you wish, you can have the following information displayed on the map as desi
 	- either the transformers as well as all the connected poles (not recommended because it causes drops in FPS)
 
 
-II. Installation:
+# II. Installation:
 In order to properly install the script, please follow the following protocol:
 	1. Create a mission in 3den and save it, with if you want an object with a variable name to display the information (see Use)
 	2. Open the mission folder (in C:\User\<YourUserName>\Documents\Arma 3 - Other Profiles\<YourProfile>\mpmissions\<MissionName>)
@@ -43,7 +43,7 @@ In order to properly install the script, please follow the following protocol:
 	7. Start the mission and check if the initialization message is displayed.
 	8. Enjoy
 
-III. Contact :
+# III. Contact :
 If you want any help with setting up or troubleshooting the script, I invite you to text me on discord: Wolv#2393
 
 Thanks for downloading my script
